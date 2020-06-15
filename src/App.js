@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 
 import Break from './components/Break'
@@ -9,11 +9,18 @@ function App() {
 
   const [sessionLength, setSessionLength] = useState(1500)
   const [breakLength, setBreakLength] = useState(300)
+  const [currentSessionType, setCurrentSessionType] = useState('Session') // 'Session or 'Break'
+  const [intervalId, setIntervalId] = useState(null)
+  const [timeLeft, setTimeLeft] = useState(sessionLength)
+
+    useEffect(() => {
+        setTimeLeft(sessionLength)
+    }, [sessionLength])
 
     const decrementBreakLength = () => {
         const newBreakLength = breakLength - 60
-        if (newBreakLength < 0){
-            setBreakLength(0)
+        if (newBreakLength < 60){
+            setBreakLength(60)
         } else {
             setBreakLength(newBreakLength)
         }
@@ -24,8 +31,8 @@ function App() {
 
   const decrementSessionLength = () => {
       const newSessionLength = sessionLength - 60
-      if (newSessionLength < 0){
-          setSessionLength(0)
+      if (newSessionLength < 60){
+          setSessionLength(60)
       } else {
           setSessionLength(newSessionLength)
       }
@@ -34,6 +41,44 @@ function App() {
       setSessionLength(sessionLength + 60)
   }
 
+  const handleResetButtonClick = () => {
+    // clear timeout interval
+    clearInterval(intervalId)
+    // set the intervalId to null
+    setIntervalId(null)
+    // set the sessionType to 'Session'
+    setCurrentSessionType('Session')
+    // reset the session length to 25 mins
+    setSessionLength(1500)
+    // reset the break length to 5mins
+    setBreakLength(300)
+    // reset the timer to 25 mins (init session length)
+    setTimeLeft(1500)
+  }
+  const isStarted = intervalId !== null
+    const handleStartStopClick = () => {
+        if (isStarted){
+            clearInterval(intervalId)
+            setIntervalId(null)
+        } else {
+            const newIntervalId = setInterval(() => {
+                setTimeLeft(prevTimeLeft => {
+                    const newTimeLeft = prevTimeLeft - 1
+                    if (newTimeLeft >= 0){
+                        return prevTimeLeft - 1
+                    }
+                    if (currentSessionType === 'Session'){
+                        setCurrentSessionType('Break')
+                        setTimeLeft(breakLength)
+                    } else if (currentSessionType === 'Break'){
+                        setCurrentSessionType('Session')
+                        setTimeLeft(sessionLength)
+                    }
+                    })
+            }, 100)
+            setIntervalId(newIntervalId)
+        }
+    }
   return (
     <div className="App">
       <Break 
@@ -41,12 +86,20 @@ function App() {
         decrementBreakLength={decrementBreakLength}
         incrementBreakLength={incrementBreakLength}
       />
-      <TimeLeft sessionLength={sessionLength}/>
+      <TimeLeft 
+        sessionLength={sessionLength}
+        breakLength={breakLength}
+        timerLabel={currentSessionType}
+        handleStartStopClick={handleStartStopClick}
+        startStopButtonLabel={isStarted ? 'stop':'start'}
+        timeLeft={timeLeft}
+        />
       <Session 
         sessionLength={sessionLength}
         decrementSessionLength={decrementSessionLength}
         incrementSessionLength={incrementSessionLength}
       />
+      <button id='reset' onClick={handleResetButtonClick}>reset</button>
     </div>
   );
 }

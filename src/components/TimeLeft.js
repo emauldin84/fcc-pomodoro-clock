@@ -1,16 +1,19 @@
-import React, {useState} from 'react'
+import React from 'react'
 import moment from 'moment'
 import momentDurationFormatSetup from 'moment-duration-format'
 
 momentDurationFormatSetup(moment)
 
-const TimeLeft = ({sessionLength}) => {
-    const [timeLeft, setTimeLeft] = useState(sessionLength)
+const TimeLeft = ({handleStartStopClick, timerLabel, startStopButtonLabel, timeLeft}) => {
 
-    const formattedTimeLeft = moment.duration(timeLeft, 's').format('mm:ss')
+
+
+    const formattedTimeLeft = moment.duration(timeLeft, 's').format('mm:ss', {trim: false})
     return (
         <div>
-            {formattedTimeLeft}
+            <p id='timer-label'>{timerLabel}</p>
+            <p id='time-left'>{formattedTimeLeft}</p>
+            <button onClick={handleStartStopClick}>{startStopButtonLabel}</button>
         </div>
     )
 }
