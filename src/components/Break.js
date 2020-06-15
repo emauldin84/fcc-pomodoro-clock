@@ -1,20 +1,8 @@
-import React, {useState} from 'react'
+import React from 'react'
 import moment from 'moment'
 
-const Break = () => {
-    const [breakLength, setBreakLength] = useState(300)
-
-    const decrementBreakLength = () => {
-        const newBreakLength = breakLength - 60
-        if (newBreakLength < 0){
-            setBreakLength(0)
-        } else {
-            setBreakLength(newBreakLength)
-        }
-    }
-    const incrementBreakLength = () => {
-        setBreakLength(breakLength + 60)
-    }
+const Break = ({breakLength, decrementBreakLength, incrementBreakLength}) => {
+    
 
     const breakLengthInMins = moment.duration(breakLength, 's').minutes()
 

@@ -1,20 +1,7 @@
-import React, {useState} from 'react'
+import React from 'react'
 import moment from 'moment'
 
-const Session = () => {
-    const [sessionLength, setSessionLength] = useState(1500)
-
-    const decrementSessionLength = () => {
-        const newSessionLength = sessionLength - 60
-        if (newSessionLength < 0){
-            setSessionLength(0)
-        } else {
-            setSessionLength(newSessionLength)
-        }
-    }
-    const incrementSessionLength = () => {
-        setSessionLength(sessionLength + 60)
-    }
+const Session = ({sessionLength, decrementSessionLength, incrementSessionLength}) => {
 
     const sessionLengthInMins = moment.duration(sessionLength, 's').minutes()
 
