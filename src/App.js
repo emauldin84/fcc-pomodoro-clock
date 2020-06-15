@@ -3,6 +3,7 @@ import './App.css';
 
 import Break from './components/Break'
 import Session from './components/Session'
+import TimeLeft from './components/TimeLeft'
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
         decrementBreakLength={decrementBreakLength}
         incrementBreakLength={incrementBreakLength}
       />
+      <TimeLeft sessionLength={sessionLength}/>
       <Session 
         sessionLength={sessionLength}
         decrementSessionLength={decrementSessionLength}
