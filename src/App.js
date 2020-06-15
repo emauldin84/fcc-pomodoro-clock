@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import './App.css';
+import './assets/main.css';
 
 import Break from './components/Break'
 import Session from './components/Session'
@@ -88,24 +88,26 @@ function App() {
         }
     }
   return (
-    <div className="App">
-      <Break 
-        breakLength={breakLength}
-        decrementBreakLength={decrementBreakLength}
-        incrementBreakLength={incrementBreakLength}
-      />
-      <TimeLeft 
-        timerLabel={currentSessionType}
-        handleStartStopClick={handleStartStopClick}
-        startStopButtonLabel={isStarted ? 'stop':'start'}
-        timeLeft={timeLeft}
+    <div className="flex flex-col h-screen items-center justify-center bg-green-700">
+      <div className="flex w-full justify-around">
+        <Break 
+          breakLength={breakLength}
+          decrementBreakLength={decrementBreakLength}
+          incrementBreakLength={incrementBreakLength}
         />
-      <Session 
-        sessionLength={sessionLength}
-        decrementSessionLength={decrementSessionLength}
-        incrementSessionLength={incrementSessionLength}
-      />
-      <button id='reset' onClick={handleResetButtonClick}>reset</button>
+        <TimeLeft 
+          timerLabel={currentSessionType}
+          handleStartStopClick={handleStartStopClick}
+          startStopButtonLabel={isStarted ? 'stop':'start'}
+          timeLeft={timeLeft}
+          handleResetButtonClick={handleResetButtonClick}
+          />
+        <Session 
+          sessionLength={sessionLength}
+          decrementSessionLength={decrementSessionLength}
+          incrementSessionLength={incrementSessionLength}
+        />
+      </div>
       <audio id='beep' ref={audioElement}>
         <source src='https://onlineclock.net/audio/options/default.mp3' type='audio/mpeg'/>
       </audio>
