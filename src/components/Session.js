@@ -3,7 +3,7 @@ import moment from 'moment'
 
 const Session = ({sessionLength, decrementSessionLength, incrementSessionLength}) => {
 
-    const sessionLengthInMins = moment.duration(sessionLength, 's').minutes()
+    const sessionLengthInMins = moment.duration(sessionLength, 's').asMinutes()
 
     return (
         <div>

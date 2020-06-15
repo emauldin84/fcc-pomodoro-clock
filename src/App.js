@@ -19,29 +19,36 @@ function App() {
 
     const decrementBreakLength = () => {
         const newBreakLength = breakLength - 60
-        if (newBreakLength < 60){
-            setBreakLength(60)
-        } else {
-            setBreakLength(newBreakLength)
+        if (newBreakLength > 0){
+          setBreakLength(newBreakLength)
         }
+        
     }
     const incrementBreakLength = () => {
-        setBreakLength(breakLength + 60)
+      const newBreakLength = breakLength + 60
+      if (newBreakLength <= 60 * 60){
+        setBreakLength(newBreakLength)
+
+      }
     }
 
   const decrementSessionLength = () => {
       const newSessionLength = sessionLength - 60
-      if (newSessionLength < 60){
-          setSessionLength(60)
-      } else {
+      if (newSessionLength > 0){
           setSessionLength(newSessionLength)
       }
   }
   const incrementSessionLength = () => {
+    const newSessionLength = sessionLength + 60
+    if (newSessionLength <= 60*60){
       setSessionLength(sessionLength + 60)
+
+    }
   }
 
   const handleResetButtonClick = () => {
+    // reset audio
+    audioElement.current.load()
     // clear timeout interval
     clearInterval(intervalId)
     // set the intervalId to null
@@ -65,15 +72,15 @@ function App() {
                 setTimeLeft(prevTimeLeft => {
                     const newTimeLeft = prevTimeLeft - 1
                     if (newTimeLeft >= 0){
-                        return prevTimeLeft - 1
+                        return newTimeLeft
                     }
                     audioElement.current.play()
                     if (currentSessionType === 'Session'){
                         setCurrentSessionType('Break')
-                        setTimeLeft(breakLength)
+                        return breakLength
                     } else if (currentSessionType === 'Break'){
                         setCurrentSessionType('Session')
-                        setTimeLeft(sessionLength)
+                        return sessionLength
                     }
                     })
             }, 100)
@@ -88,8 +95,6 @@ function App() {
         incrementBreakLength={incrementBreakLength}
       />
       <TimeLeft 
-        sessionLength={sessionLength}
-        breakLength={breakLength}
         timerLabel={currentSessionType}
         handleStartStopClick={handleStartStopClick}
         startStopButtonLabel={isStarted ? 'stop':'start'}

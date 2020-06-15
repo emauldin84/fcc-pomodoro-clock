@@ -13,7 +13,7 @@ const TimeLeft = ({handleStartStopClick, timerLabel, startStopButtonLabel, timeL
         <div>
             <p id='timer-label'>{timerLabel}</p>
             <p id='time-left'>{formattedTimeLeft}</p>
-            <button onClick={handleStartStopClick}>{startStopButtonLabel}</button>
+            <button id='start_stop' onClick={handleStartStopClick}>{startStopButtonLabel}</button>
         </div>
     )
 }
