@@ -83,7 +83,7 @@ function App() {
         } else {
             const newIntervalId = setInterval(() => {
                 setTimeLeft(prevTimeLeft => prevTimeLeft - 1)
-            }, 100)
+            }, 1000)
             setIntervalId(newIntervalId)
         }
     }
