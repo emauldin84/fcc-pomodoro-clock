@@ -2,9 +2,10 @@ import React from 'react'
 import moment from 'moment'
 import momentDurationFormatSetup from 'moment-duration-format'
 
+// @ts-ignore
 momentDurationFormatSetup(moment)
 
-const TimeLeft = ({handleStartStopClick, timerLabel, startStopButtonLabel, timeLeft, handleResetButtonClick}) => {
+const TimeLeft: React.FC<Props> = ({handleStartStopClick, timerLabel, startStopButtonLabel, timeLeft, handleResetButtonClick}) => {
 
 
 
@@ -17,6 +18,14 @@ const TimeLeft = ({handleStartStopClick, timerLabel, startStopButtonLabel, timeL
             <button className="border-2 text-green-900 rounded-lg border-green-900 border-solid px-4 py-2" id='reset' onClick={handleResetButtonClick}>reset</button>
         </div>
     )
+}
+
+type Props = {
+    handleStartStopClick: () => void
+    timerLabel: string
+    startStopButtonLabel: string
+    timeLeft: number
+    handleResetButtonClick: () => void
 }
 
 export default TimeLeft

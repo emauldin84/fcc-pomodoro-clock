@@ -3,7 +3,7 @@ import moment from 'moment'
 
 import {BreakSessionContainer, BreakSessionLabel, BreakSessionTime, PlusMinusButtonContainer, PlusMinusButton} from '../ui/BreakSessionUi'
 
-const Session = ({sessionLength, decrementSessionLength, incrementSessionLength}) => {
+const Session: React.FC<Props> = ({sessionLength, decrementSessionLength, incrementSessionLength}) => {
 
     const sessionLengthInMins = moment.duration(sessionLength, 's').asMinutes()
 
@@ -17,6 +17,12 @@ const Session = ({sessionLength, decrementSessionLength, incrementSessionLength}
             </PlusMinusButtonContainer>
         </BreakSessionContainer>
     )
+}
+
+type Props = {
+    sessionLength: number
+    decrementSessionLength: () => void
+    incrementSessionLength: () => void
 }
 
 export default Session

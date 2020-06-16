@@ -3,7 +3,7 @@ import moment from 'moment'
 
 import {BreakSessionContainer, BreakSessionLabel, BreakSessionTime, PlusMinusButtonContainer, PlusMinusButton} from '../ui/BreakSessionUi'
 
-const Break = ({breakLength, decrementBreakLength, incrementBreakLength}) => {
+const Break: React.FC<Props> = ({breakLength, decrementBreakLength, incrementBreakLength}) => {
 
     const breakLengthInMins = moment.duration(breakLength, 's').asMinutes()
 
@@ -17,6 +17,12 @@ const Break = ({breakLength, decrementBreakLength, incrementBreakLength}) => {
             </PlusMinusButtonContainer>
         </BreakSessionContainer>
     )
+}
+
+type Props = {
+    breakLength: number
+    decrementBreakLength: () => void
+    incrementBreakLength: () => void
 }
 
 export default Break
